@@ -28,4 +28,9 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
 
+    # import and register blueprints
+    from views import views
+
+    app.register_blueprint(views)
+
     return app
