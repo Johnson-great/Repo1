@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from models.user import db
+from datetime import datetime
 
 
 class Student(UserMixin, db.Model):
@@ -9,3 +10,5 @@ class Student(UserMixin, db.Model):
     student_id = db.Column(db.Integer, nullable=False)
     department = db.Column(db.String, nullable=False)
     DOB = db.Column(db.string, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now)
