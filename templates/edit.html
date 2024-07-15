@@ -1,0 +1,45 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Edit student
+{% endblock %}
+
+{% if current_user.is_authenticated %}
+{% block content %}
+<form action="{{ url_for('views.student.update_student', id=student.student_id) }}" method="post">
+    <input type="hidden" name="_method" value="UPDATE">
+    <label for="first_name">
+        first_name
+        <input type="text" name="first_name" id="first_name" {% if student %}
+        value="{{ student.first_name }}"
+        {% endif %}>
+    </label>
+    <label for="last_name">
+        last_name
+        <input type="text" name="last_name" id="last_name" {% if student %}
+        value="{{ student.last_name }}"
+        {% endif %}>
+    </label>
+    <label for="student_id">
+        student_id
+        <input type="text" name="student_id" id="student_id" {% if student %}
+        value="{{ student.student_id }}"
+        {% endif %}>
+    </label>
+    <label for="department">
+        department
+        <input type="text" name="department" id="department" {% if student %}
+        value="{{ student.department }}"
+        {% endif %}>
+    </label>
+    <label for="DOB">
+        DOB
+        <input type="text" name="DOB" id="DOB" {% if student %}
+        value="{{ student.DOB }}"
+        {% endif %}>
+    </label>
+
+    <input type="submit" name="submit" id="submit" value="update student">
+</form>
+{% endblock %}
+{% endif %}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <ul>
+
+            <li>
+                <a href="{{ url_for('home') }}">Home</a>
+            </li>
+            <li>
+                <a href="{{ url_for('views.about.about') }}">About Us</a>
+            </li>
+            <li>
+                <a href="{{ url_for('views.student.get_students') }}">Students</a>
+            </li>
+            {% if current_user.is_authenticated %}
+                <li>
+                    <a href="{{ url_for('views.auth.register') }}">Register</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('views.auth.logout') }}">Logout</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{{ url_for('views.auth.login') }}">Login</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    <div class="messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    {% block content %}{% endblock %}
+    <footer class="footer">
+        Student App 2024
+    </footer>
+</body>
+</html>

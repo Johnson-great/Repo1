@@ -1,0 +1,55 @@
+{% extends 'index.html' %}
+
+{% block title %}Students{% endblock %}
+
+{% block content %}
+    <h1 class="title">Students</h1>
+    <p class="title"><a href="{{ url_for('views.student.add_student') }}">Add New Student</a></p>
+
+    <table class="students-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>DOB</th>
+                <th>Department</th>
+                {% if current_user.is_authenticated %}
+                    <th>Edit</th>
+                    <th>Delete</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% if students %}
+                {% for stud in students %}
+                    <tr>
+                        <td>{{ stud.id }}</td>
+                        <td>{{ stud.first_name }}</td>
+                        <td>{{ stud.last_name }}</td>
+                        <td>{{ stud.DOB }}</td>
+                        <td>{{ stud.department }}</td>
+                        {% if current_user.is_authenticated %}
+                            <td>
+                                <form action="{{ url_for('views.student.update_student', id=stud.student_id) }}" method="get">
+                                    <input type="hidden" name="_method" value="UPDATE">
+                                    <input type="submit" value="Edit">
+                                </form>
+                            </td>
+                            <td>
+                                <form action="{{ url_for('views.student.delete_student', id=stud.student_id) }}" method="post">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="submit" value="Delete">
+                                </form>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="7">No students found.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock %}

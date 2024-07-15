@@ -1,0 +1,38 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Add student
+{% endblock %}
+
+{% if current_user.is_authenticated %}
+{% block content %}
+<form action="{{ url_for('views.student.add_student') }}" method="post">
+    <label for="first_name">
+        first_name
+        <input type="text" name="first_name" id="first_name" {% if data %}
+        value="{{ data.first_name }}"
+        {% endif %}>
+    </label>
+    <label for="last_name">
+        last_name
+        <input type="text" name="last_name" id="last_name" {% if data %}
+        value="{{ data.last_name }}"
+        {% endif %}>
+    </label>
+    <label for="department">
+        department
+        <input type="text" name="department" id="department" {% if data %}
+        value="{{ data.department }}"
+        {% endif %}>
+    </label>
+    <label for="DOB">
+        DOB
+        <input type="text" name="DOB" id="DOB" {% if data %}
+        value="{{ data.DOB }}"
+        {% endif %}>
+    </label>
+
+    <input type="submit" name="submit" id="submit" value="add student">
+</form>
+{% endblock %}
+{% endif %}

@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>HOME</h1>
+    <p>Welcome to Student Management System Web Application.</p>
+
+    <p>
+        Login if you are an admin. <a href="{{ url_for('views.auth.login') }}">LOGIN</a> <br>
+        Interested in our Students Table? Click here: <a href="{{ url_for('views.student.get_students') }}">OUR STUDENTS</a> <br>
+        Or just want to check us out? visit About Us <a href="{{ url_for('views.about.about') }}">ABOUT US</a>
+    </p>
+{% endblock %}
