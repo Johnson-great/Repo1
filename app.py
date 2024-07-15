@@ -14,13 +14,15 @@ def create_app():
     # create a secret key for flask instance
     app.secret_key = '490f934jfi93jqi'
 
+    app.url_map.strict_slashes = False
+
     # initialize the database with the flask instance
     db.init_app(app)
 
     # create an instance of the login manager for logging in users
     login_manager = LoginManager()
     # point the login manager to the function that handles user authentication
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = 'views.auth.login'
     # initialize the login manager with flask app
     login_manager.init_app(app)
 
