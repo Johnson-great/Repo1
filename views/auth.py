@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, request, render_template, url_for
+from flask import Blueprint, redirect, request, render_template, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from models.user import User, db
 
@@ -13,15 +13,19 @@ def register():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        user = User(email=email, username=username)
-        user.set_password(password)
+        try:
+            user = User(email=email, username=username)
+            user.set_password(password)
 
-        db.session.add(user)
-        db.session.commit()
+            db.session.add(user)
+            db.session.commit()
+        except Exception as exc:
+            flash('could not add admin,  something went wrong', 'error')
+            return render_template('register.html', current_user=current_user)
 
-        login_user(user)
-        return redirect(url_for('views.admin.dashboard'))
-    return render_template('register.html')
+        flash(f'admin {username} successfully Registered', 'success')
+        return redirect(url_for('home'))
+    return render_template('register.html', current_user=current_user)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -31,7 +35,8 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user and user.verify_password(password):
             login_user(user)
-            return redirect(url_for('views.admin.dashboard'))
+            flash(f"Welcome {user.__dict__.get('username')}", 'success')
+            return redirect(url_for('views.student.get_students'))
         else:
             error = 'Invalid username or password'
     else:
@@ -43,4 +48,4 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('views.auth.login'))
