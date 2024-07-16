@@ -1,0 +1,31 @@
+name: "Question"
+  description: "Ask a question"
+  labels: ["question"]
+  body:
+    - type: markdown
+      attributes:
+        value: |
+          Thanks for taking the time to ask a question!
+
+    - type: input
+      id: question-title
+      attributes:
+        label: "Question Title"
+        description: "A brief title for your question"
+        placeholder: "Title of your question"
+        value: ""
+
+    - type: textarea
+      id: question-details
+      attributes:
+        label: "Question Details"
+        description: "Please provide details about your question"
+        placeholder: "Describe your question in detail"
+        value: ""
+
+    - type: textarea
+      id: additional-context
+      attributes:
+        label: "Additional Context"
+        description: "Add any other context or screenshots related to your question here."
+        value: ""
